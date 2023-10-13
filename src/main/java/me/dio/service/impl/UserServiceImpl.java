@@ -1,5 +1,6 @@
 package me.dio.service.impl;
 
+import me.dio.domain.infra.exception.GlobalExceptionHandler;
 import me.dio.domain.model.User;
 import me.dio.domain.repository.UserRepository;
 import me.dio.dtos.UserDTO;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import static java.util.Optional.ofNullable;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,8 +25,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserDTO data) {
+        ofNullable(data).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User to create must not be null."));
+        ofNullable(data.account()).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User account must not be null."));
+        ofNullable(data.card()).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User card must not be null."));
+
         if (userRepository.existsByAccountNumber(data.account().getNumber())) {
             throw new IllegalArgumentException("This account number already exists.");
+        }
+        if (userRepository.existsByCardNumber(data.card().getNumber())) {
+            throw new GlobalExceptionHandler.BusinessException("This card number already exists.");
         }
         User newUser = new User(data);
         this.saveUser(newUser);
