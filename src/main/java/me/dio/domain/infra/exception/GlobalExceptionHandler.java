@@ -29,4 +29,11 @@ public class GlobalExceptionHandler {
         LOGGER.error(message, unexpectedException);
         return new ResponseEntity<>( message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    public static class BusinessException extends RuntimeException {
+        private static final long serialVersionUID = 1L;
+        public BusinessException(String message) {
+            super(message);
+        }
+    }
 }
