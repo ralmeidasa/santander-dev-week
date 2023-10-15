@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
         }
         User newUser = new User(data);
         this.saveUser(newUser);
-        System.out.println("User created");
         return newUser;
     }
 
