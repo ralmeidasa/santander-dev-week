@@ -1,5 +1,6 @@
 package me.dio.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import me.dio.domain.model.User;
 import me.dio.dtos.UserDTO;
 import me.dio.service.UserService;
@@ -11,8 +12,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
+@Tag(name = "Users Controller", description = "RESTful API for managing users.")
 public class UserController {
     @Autowired
     private UserService userService;
