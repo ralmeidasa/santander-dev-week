@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserDTO data) {
-        ofNullable(data).orElseThrow(() -> new IllegalArgumentException("User to create must not be null."));
+        ofNullable(data).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User to create must not be null."));
         ofNullable(data.account()).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User account must not be null."));
         ofNullable(data.card()).orElseThrow(() -> new GlobalExceptionHandler.BusinessException("User card must not be null."));
 
@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
         }
         User newUser = new User(data);
         this.saveUser(newUser);
+        System.out.println("User created");
         return newUser;
     }
 
