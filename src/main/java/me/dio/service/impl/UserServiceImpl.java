@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("This account number already exists.");
         }
         if (userRepository.existsByCardNumber(data.card().getNumber())) {
-            throw new GlobalExceptionHandler.BusinessException("This card number already exists.");
+            throw new IllegalArgumentException("This card number already exists.");
         }
         User newUser = new User(data);
         this.saveUser(newUser);
